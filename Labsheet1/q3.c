@@ -23,10 +23,10 @@ int main()
 
 void printStudent(struct Students *student, int size)
 {
+    printf("%-20s\t%-20s\n", "Name", "Marks");
     for (int i = 0; i < size; i++)
     {
-        printf("Name: %s\n", student[i].name);
-        printf("Marks: %.2f\n", student[i].marks);
+        printf("%-20s\t%-20.2f\n", student[i].name, student[i].marks);
     }
 }
 
