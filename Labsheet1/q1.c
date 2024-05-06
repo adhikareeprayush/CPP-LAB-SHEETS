@@ -1,45 +1,59 @@
 #include <stdio.h>
 
+// defining the constants for error handling
+#define MAX_YEARS 10
+#define MONTHS 12
+char months[][10] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
 int main()
 {
-    double avg_month, avg_year, avg_over_years, total_expends;
-    int choice, interval;
-    printf("Please select an option:\n");
-    printf("1. Calculate Average Expenditure Of A Month.\n");
-    printf("2. Calculate Average Expenditure Of A Year\n");
-    printf("3. Calculate Average Expenditure Over Years\n");
-    printf("4. Exit\n");
-    printf("Your choice: ");
-    scanf("%d", &choice);
-    switch (choice)
+    // defining the variables
+    int expenditure[MAX_YEARS][MONTHS];
+    int start_year, end_year, num_years;
+    int total_expenditure = 0, total_months = 0;
+
+    printf("Enter the start year: ");
+    scanf("%d", &start_year);
+
+    printf("Enter the end year: ");
+    scanf("%d", &end_year);
+
+    num_years = end_year - start_year + 1;
+
+    // Input expenditure for each month of each year
+    for (int year = start_year; year <= end_year; year++)
     {
-    case 1:
-        printf("Enter number of months: ");
-        scanf("%d", &interval);
-        printf("Enter the total expenditure:");
-        scanf("%lf", &total_expends);
-        avg_month = total_expends / interval;
-        printf("Average expenditure of a month: %.2lf\n", avg_month);
-        break;
-    case 2:
-        printf("Enter number of years: ");
-        scanf("%d", &interval);
-        printf("Enter the total expenditure:");
-        scanf("%lf", &total_expends);
-        avg_year = total_expends / interval;
-        printf("Average expenditure of a year: %.2lf\n", avg_year);
-        break;
-    case 3:
-        printf("Enter number of years: ");
-        scanf("%d", &interval);
-        printf("Enter the total expenditure:");
-        scanf("%lf", &total_expends);
-        avg_over_years = total_expends / interval;
-        printf("Average expenditure over years: %.2lf\n", avg_over_years);
-        break;
-    case 4:
-        printf("Exiting...\n");
-        break;
+        printf("Enter expenditure for year %d:\n", year);
+        for (int month = 0; month < MONTHS; month++)
+        {
+            printf("Month %d: ", month + 1);
+            scanf("%d", &expenditure[year - start_year][month]);
+        }
+    }
+
+    // Displaying the table
+    printf("\n\n");
+    printf("%-5s", "Year");
+    for (int month = 1; month <= MONTHS; month++)
+    {
+        printf("%-10s", months[month - 1]);
+    }
+    printf("%-10s", "Total");
+    printf("%-10s", "Average");
+    printf("\n");
+
+    for (int year = 0; year < num_years; year++)
+    {
+        printf("%-5d", start_year + year);
+        for (int month = 0; month < MONTHS; month++)
+        {
+            printf("%-10d", expenditure[year][month]);
+            total_expenditure += expenditure[year][month];
+            total_months++;
+        }
+        printf("%-10d", total_expenditure);
+        printf("%-10.2f", (float)total_expenditure / total_months);
+        printf("\n");
     }
 
     return 0;
