@@ -112,18 +112,46 @@ void retrive_data(struct Students *student)
         return;
     }
 
-    printf("%-20s\t%-20s\t%-20s\t%-20s\n", "Name", "Roll Number", "Marks", "Phone Number");
-
-    int i = 0;
-    while (fscanf(file, "%[^';];%d;%f;%d", student[i].name, &student[i].roll_no, &student[i].marks, &student[i].phone_number) != EOF)
+    // count the number of students
+    int count = 0;
+    rewind(file);
+    char buffer[100];
+    while (fgets(buffer, 100, file) != NULL)
     {
-        printf("%-20s\t%-20d\t%-20.2f\t%-20d\n", student[i].name, student[i].roll_no, student[i].marks, student[i].phone_number);
+        count++;
+    }
+    rewind(file);
+
+    // create an array of student structures
+    struct Students students[count];
+    int i = 0;
+    while (fscanf(file, "%49[^;];%d;%f;%d", students[i].name, &students[i].roll_no, &students[i].marks, &students[i].phone_number) != EOF)
+    {
         i++;
     }
-
     fclose(file);
-}
 
+    // sort the details according to the name alphabetically
+    for (int j = 0; j < count - 1; j++)
+    {
+        for (int k = 0; k < count - j - 1; k++)
+        {
+            if (strcmp(students[k].name, students[k + 1].name) > 0)
+            {
+                struct Students temp = students[k];
+                students[k] = students[k + 1];
+                students[k + 1] = temp;
+            }
+        }
+    }
+
+    // print the details
+    printf("%-20s\t%-20s\t%-20s\t%-20s\n", "Name", "Roll Number", "Marks", "Phone Number");
+    for (int j = 0; j < count; j++)
+    {
+        printf("%-20s\t%-20d\t%-20.2f\t%-20d\n", students[j].name, students[j].roll_no, students[j].marks, students[j].phone_number);
+    }
+}
 void clear_buffer()
 {
     while (getchar() != '\n')
