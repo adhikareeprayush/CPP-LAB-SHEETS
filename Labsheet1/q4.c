@@ -24,7 +24,7 @@ int main()
     printf("1. Enter Student Data\n");
     printf("2. Retrive Student Data\n");
     scanf("%d", &choice);
-    void clear_buffer(); // clear the input buffer
+    clear_buffer(); // clear the input buffer
 
     switch (choice)
     {
