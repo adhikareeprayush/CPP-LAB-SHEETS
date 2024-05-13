@@ -123,6 +123,7 @@ void retrive_data(struct Students *student)
 
     fclose(file);
 }
+
 void clear_buffer()
 {
     while (getchar() != '\n')

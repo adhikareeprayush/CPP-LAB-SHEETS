@@ -4,6 +4,7 @@ struct Students
     char name[50];
     float marks;
 };
+void clearInputBuffer();
 void printStudent(struct Students *student, int size);
 void getStudent(struct Students *student, int size);
 
@@ -13,8 +14,7 @@ int main()
     printf("Enter the number of students: ");
     scanf("%d", &size);
     // clear the input buffer
-    while (getchar() != '\n')
-        ;
+    clearInputBuffer();
     struct Students student[size];
     getStudent(student, size);
     printStudent(student, size);
@@ -37,11 +37,16 @@ void getStudent(struct Students *student, int size)
         printf("Enter the name of student %d: ", i + 1);
         scanf("%[^\n]", student[i].name);
         // clear the input buffer
-        while (getchar() != '\n')
-            ;
+        clearInputBuffer();
         printf("Enter the marks of student %d: ", i + 1);
         scanf("%f", &student[i].marks);
-        while (getchar() != '\n')
-            ;
+        // clear the input buffer
+        clearInputBuffer();
     }
+}
+
+void clearInputBuffer()
+{
+    while (getchar() != '\n')
+        ;
 }
